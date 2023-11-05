@@ -1,45 +1,76 @@
+import { Link, useNavigate } from "react-router-dom";
+import '../shared/Navbar.css'
+import { useContext } from "react";
+import { AuthContext } from "../provider/AuthProvider";
+import userPic from '../assets/user.png'
 
 const Navbar = () => {
+
+    const { user, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const menu = <>
+        <li><Link>Home</Link></li>
+        <li><Link to='/availablefood'>Available Food</Link></li>
+
+        {
+            user && <><li><Link to='/addfood'>Add Food</Link></li>
+                <li><Link to='/managemyfood'>Manage My Food</Link></li>
+                <li><Link to='myfoodrequest'>My Food Request</Link></li></>
+        }
+
+    </>
+
+    const handleLogout = () => {
+        logOut()
+            .then(result => {
+                navigate('/')
+                console.log(result.user);
+            })
+            .then(error => {
+                console.log(error.message);
+            })
+    }
+
     return (
         <div className="navbar bg-base-100">
-  <div className="navbar-start">
-    <div className="dropdown">
-      <label tabIndex={0} className="btn btn-ghost lg:hidden">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
-      </label>
-      <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-        <li><a>Item 1</a></li>
-        <li>
-          <a>Parent</a>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </li>
-        <li><a>Item 3</a></li>
-      </ul>
-    </div>
-    <a className="btn btn-ghost normal-case text-xl">daisyUI</a>
-  </div>
-  <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1">
-      <li><a>Item 1</a></li>
-      <li tabIndex={0}>
-        <details>
-          <summary>Parent</summary>
-          <ul className="p-2">
-            <li><a>Submenu 1</a></li>
-            <li><a>Submenu 2</a></li>
-          </ul>
-        </details>
-      </li>
-      <li><a>Item 3</a></li>
-    </ul>
-  </div>
-  <div className="navbar-end">
-    <a className="btn">Button</a>
-  </div>
-</div>
+            <div className="navbar-start flex">
+                <div className="dropdown">
+                    <label tabIndex={0} className="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+                    </label>
+                    <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        {menu}
+                    </ul>
+                </div>
+                <div className="ml-[90px] md:ml-[250px] lg:ml-[0px]">
+                    <a className="btn btn-ghost normal-case text-xl btn-sm">daisyUI</a>
+                </div>
+            </div>
+            <div className="navbar-center hidden lg:flex">
+                <ul className="menu menu-horizontal px-1">
+                    {menu}
+                </ul>
+            </div>
+
+
+            <div className="navbar-end">
+                {
+                    user && <div className="text-lg font-semibold mr-2">{user?.displayName}</div>
+                }
+                {
+                    user ? <>
+                        <img className="rounded-3xl h-10 w-10" src={user?.photoURL} alt="" />
+                    </> :
+                        <div className="w-10 rounded-full">
+                            <img src={userPic} />
+                        </div>
+                }
+                {
+                    user ? <button onClick={handleLogout} className="ml-2 btn btn-sm">Log Out</button> : <Link to='/login'><button className="btn btn-sm ml-2">Login</button></Link>
+                }
+            </div>
+        </div>
     );
 };
 
