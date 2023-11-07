@@ -27,7 +27,8 @@ const router = createBrowserRouter([
       },
       {
         path: 'availablefood',
-        element: <AvailableFood></AvailableFood>
+        element: <AvailableFood></AvailableFood>,
+        loader : ()=>fetch('http://localhost:5000/foods')
       },
       {
         path: 'addfood',
@@ -60,6 +61,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-    <ToastContainer />
+    <ToastContainer></ToastContainer>
   </React.StrictMode>,
 )
