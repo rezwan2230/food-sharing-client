@@ -12,7 +12,7 @@ const FoodCart = ({food}) => {
     // https://i.ibb.co/64rztwh/pizza-pizza-filled-with-tomatoes-salami-olives.jpg
 
     return (
-        <div className="relative w-[440px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="relative w-[440px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
             <img className="rounded-t-lg w-full h-72 z-1" src={foodImg} alt="" />
             <div>
                 <img className='h-12 w-12 absolute top-5 right-2 z-8' src={badge} alt="" />
