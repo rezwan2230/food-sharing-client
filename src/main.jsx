@@ -15,6 +15,8 @@ import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import AuthProvider from './provider/AuthProvider';
 import { ToastContainer } from 'react-toastify';
+import SingleFoodDetails from './pages/SingleFoodDetails/SingleFoodDetails';
+import UpdateFood from './pages/UpdateFood/UpdateFood';
 
 const router = createBrowserRouter([
   {
@@ -41,6 +43,16 @@ const router = createBrowserRouter([
       {
         path: 'myfoodrequest',
         element: <MyFoodRequest></MyFoodRequest>
+      },
+      {
+        path: 'foods/:id',
+        element: <SingleFoodDetails></SingleFoodDetails>,
+        loader : ({params})=>fetch(`http://localhost:5000/foods/${params.id}`)
+      },
+      {
+        path: 'updatefoods/:id',
+        element: <UpdateFood></UpdateFood>,
+        loader : ({params})=>fetch(`http://localhost:5000/foods/${params.id}`)
       },
       {
         path: '/login',

@@ -6,7 +6,9 @@ const AddFood = () => {
 
     const { user } = useContext(AuthContext)
     const authorName = user?.displayName
+    const email = user?.email
     const authorPhotoUrl = user?.photoURL
+    const status = "available";
 
     const handleAddFood = (e) => {
         e.preventDefault()
@@ -20,7 +22,7 @@ const AddFood = () => {
         const resturantName = form.resturantname.value
         const expiredate = form.date.value
         const additionalNotes = form.notes.value
-        const newFood = { authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes };
+        const newFood = { authorName, email, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status};
 
 
         fetch('http://localhost:5000/foods', {
