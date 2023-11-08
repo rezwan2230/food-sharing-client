@@ -1,20 +1,43 @@
 import badge from '../assets/medal.png'
+import badge2 from '../assets/updated.png'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const FoodCart = ({food}) => {
     const {user} = useContext(AuthContext)
 
     const  {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
-    console.log(food);
+    
+    const handleRequest = ()=>{
+        console.log(food);
+        fetch('http://localhost:5000/requestedfood', {
+            method : "POST",
+            headers : {
+                'content-type' : 'application/json'
+            },
+            body : JSON.stringify(food)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if (data.insertedId) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'request successfull',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                })
+            }
+        })
+    }
 
     return (
         <div className="relative w-[440px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
             <img className="rounded-t-lg w-full h-72 z-1" src={foodImg} alt="" />
             <div>
-                <img className='h-12 w-12 absolute top-5 right-2 z-8' src={badge} alt="" />
-                <p className='absolute text-black  rounded-xl top-6 right-[15px] z-10  font-bold text-center text-sm'><span className='text-lg text-red-700'>{discount}</span>%<br /></p>
+                <img className='h-12 w-12 absolute top-5 right-2 z-8' src={badge2} alt="" />
+                <p className='absolute text-black  rounded-xl top-[26px] right-[16px] z-10  font-bold text-center text-sm'><span className='text-base text-red-700'>{discount}</span>%<br /></p>
             </div>
 
             <div className="p-5 pt-2">
@@ -45,9 +68,9 @@ const FoodCart = ({food}) => {
                 </div>
                 <div className='flex justify-center gap-5 py-2'>
                     <div className='flex'>
-                        <Link className="inline-flex disabled items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <button onClick={handleRequest} className="inline-flex disabled items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                             Request
-                        </Link>
+                        </button>
                     </div>
                     <div className='flex'>
                         <Link to={`/foods/${_id}`} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

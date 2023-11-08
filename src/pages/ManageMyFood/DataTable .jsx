@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../ManageMyFood/DataTable.css'
 import Swal from 'sweetalert2';
-import { key } from 'localforage';
 
 
 const DataTable = ({ food, myFood, setMyFood }) => {
