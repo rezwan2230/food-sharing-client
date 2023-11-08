@@ -37,13 +37,6 @@ const DataTable = ({ food, myFood, setMyFood }) => {
                     })
             }
         });
-
-
-
-
-
-
-
     }
 
 

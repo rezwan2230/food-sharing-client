@@ -10,6 +10,10 @@ const FoodCart = ({food}) => {
 
     const  {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
     
+    const requestedFood = {authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status}
+
+    console.log(requestedFood);
+
     const handleRequest = ()=>{
         console.log(food);
         fetch('http://localhost:5000/requestedfood', {
@@ -17,7 +21,7 @@ const FoodCart = ({food}) => {
             headers : {
                 'content-type' : 'application/json'
             },
-            body : JSON.stringify(food)
+            body : JSON.stringify(requestedFood)
         })
         .then(res=>res.json())
         .then(data=>{
