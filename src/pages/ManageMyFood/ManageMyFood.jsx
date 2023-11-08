@@ -44,7 +44,7 @@ const ManageMyFood = () => {
                     <tbody>
 
                         {
-                            myFood?.map(food=><DataTable key={food._id} food={food}></DataTable>)
+                            myFood?.map(food=><DataTable key={food._id} food={food} myFood={myFood} setMyFood={setMyFood}></DataTable>)
                         }
 
                     </tbody>

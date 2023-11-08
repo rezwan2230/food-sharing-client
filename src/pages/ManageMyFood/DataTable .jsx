@@ -1,15 +1,50 @@
 import { Link } from 'react-router-dom';
 import '../ManageMyFood/DataTable.css'
+import Swal from 'sweetalert2';
+import { key } from 'localforage';
 
 
-const DataTable = ({ food }) => {
-    const {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
+const DataTable = ({ food, myFood, setMyFood }) => {
+    const { _id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
 
-    const handleDelete = (_id)=>{
-        console.log(_id);
+    const handleDelete = (_id) => {
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                fetch(`http://localhost:5000/foods/${_id}`, {
+                    method: "DELETE"
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                        if (data.deletedCount > 0) {
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                            const remaining = myFood?.filter(food =>food._id !== _id)
+                            setMyFood(remaining)
+                        }
+                    })
+            }
+        });
 
 
-        
+
+
+
+
+
     }
 
 
@@ -42,7 +77,7 @@ const DataTable = ({ food }) => {
                 <Link to={`/updatefoods/${_id}`}><button className="bg-lime-300 px-2 py-1 rounded-lg hover:px-[7px] hover:py-[2px]">Edit</button></Link>
             </th>
             <th>
-                <button onClick={()=>handleDelete(_id)} className="bg-lime-300 px-2 py-1 rounded-lg hover:px-[7px] hover:py-[2px]">Delete</button>
+                <button onClick={() => handleDelete(_id)} className="bg-lime-300 px-2 py-1 rounded-lg hover:px-[7px] hover:py-[2px]">Delete</button>
             </th>
 
         </tr>
