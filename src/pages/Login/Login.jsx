@@ -3,23 +3,33 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 import { AuthContext } from "../../provider/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
 
     const navigate = useNavigate()
-    const { signIn, signInWithGoogle } = useContext(AuthContext)
+    const {user, signIn, signInWithGoogle } = useContext(AuthContext)
     const location = useLocation()
 
+    const email = user?.email
+    const newUser = {email}
 
     const handleLogin = (e) => {
         e.preventDefault()
         const email = e.target.email.value
+        const user = { email }
         const password = e.target.password.value
-
-        console.log(email, password);
 
         signIn(email, password)
             .then(result => {
+
+                axios.post('http://localhost:5000/jwt', user, { withCredentials: true })
+                    .then(res => {
+                        console.log(res.data);
+                        if (res.data.success) {
+                            navigate(location?.state ? location?.state : "/")
+                        }
+                    })
                 navigate(location?.state ? location.state : '/')
                 console.log(result.user);
             })
@@ -29,14 +39,23 @@ const Login = () => {
                     autoClose: 2000,
                 });
                 console.log(error.message);
-            })
+            })   
 
     }
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
+        axios.post('http://localhost:5000/jwt', newUser, { withCredentials: true })
+        .then(res => {
+            console.log(res.data);
+            if (res.data.success) {
+                navigate(location?.state ? location?.state : "/")
+            }
+        })
         navigate(location?.state ? location.state : '/')
     }
+
+   
 
 
     return (
