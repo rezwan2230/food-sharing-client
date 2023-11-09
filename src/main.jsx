@@ -17,6 +17,7 @@ import AuthProvider from './provider/AuthProvider';
 import { ToastContainer } from 'react-toastify';
 import SingleFoodDetails from './pages/SingleFoodDetails/SingleFoodDetails';
 import UpdateFood from './pages/UpdateFood/UpdateFood';
+import PrivateRoute from './private/PrivateRoute';
 
 const router = createBrowserRouter([
   {
@@ -25,35 +26,36 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home></Home>
+        element: <Home></Home>,
+        loader : ()=>fetch('http://localhost:5000/foods?sortField=quantity&sortOrder=-1&limit=6')
       },
       {
         path: 'availablefood',
         element: <AvailableFood></AvailableFood>,
-        loader : ()=>fetch('http://localhost:5000/foods')
+        loader: () => fetch('http://localhost:5000/foods')
       },
       {
         path: 'addfood',
-        element: <AddFood></AddFood>
+        element: <PrivateRoute><AddFood></AddFood></PrivateRoute>
       },
       {
         path: 'managemyfood',
-        element: <ManageMyFood></ManageMyFood>
+        element: <PrivateRoute><ManageMyFood></ManageMyFood></PrivateRoute>
       },
       {
         path: 'myfoodrequest',
-        element: <MyFoodRequest></MyFoodRequest>,
-        loader : ()=>fetch('http://localhost:5000/requestedfood')
+        element: <PrivateRoute><MyFoodRequest></MyFoodRequest></PrivateRoute>,
+        loader: () => fetch('http://localhost:5000/requestedfood')
       },
       {
         path: 'foods/:id',
-        element: <SingleFoodDetails></SingleFoodDetails>,
-        loader : ({params})=>fetch(`http://localhost:5000/foods/${params.id}`)
+        element: <PrivateRoute><SingleFoodDetails></SingleFoodDetails></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:5000/foods/${params.id}`)
       },
       {
         path: 'updatefoods/:id',
-        element: <UpdateFood></UpdateFood>,
-        loader : ({params})=>fetch(`http://localhost:5000/foods/${params.id}`)
+        element: <PrivateRoute><UpdateFood></UpdateFood></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:5000/foods/${params.id}`)
       },
       {
         path: '/login',
@@ -71,9 +73,11 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-    <ToastContainer></ToastContainer>
+    <div className='bg-[#F7F4F0]'>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+      <ToastContainer></ToastContainer>
+    </div>
   </React.StrictMode>,
 )

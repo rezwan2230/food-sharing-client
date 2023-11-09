@@ -64,7 +64,7 @@ const Register = () => {
 
 
     return (
-        <div className="w-full md:h-screen font-sans bg-cover h-[900px] -mt-[88px] bg-slate-700 bg-blend-overlay" style={{ backgroundImage: 'url(https://i.ibb.co/8YvCJKN/pexels-albin-berlin-919073.jpg)', backgroundSize: 'cover', backgroundPosition: 'right' }}>
+        <div className="w-full md:h-screen font-sans bg-cover h-[900px]  bg-current" style={{ backgroundImage: 'url()', backgroundSize: 'cover', backgroundPosition: 'right' }}>
             <div className="container flex items-center justify-center flex-1 h-full mx-auto mb-52">
 
                 <div className="w-full max-w-lg md:-mt-16 mt-36">

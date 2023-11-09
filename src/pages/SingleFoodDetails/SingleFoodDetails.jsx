@@ -1,15 +1,41 @@
 import { Link, useLoaderData } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SingleFoodDetails = () => {
-    const { authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = useLoaderData()
+
+    const food = useLoaderData()
+
+    const  {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
+    
+    const requestedFood = {authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status}
 
     const originalPrice = parseInt(price)
     const percentage = parseInt(discount)
     const discountPrice = (percentage * originalPrice) / 100;
     console.log(discountPrice);
 
-    const currentPrice = Math.round(originalPrice - discountPrice)
-    console.log(currentPrice);
+    const handleRequest = ()=>{
+        console.log(food);
+        fetch('http://localhost:5000/requestedfood', {
+            method : "POST",
+            headers : {
+                'content-type' : 'application/json'
+            },
+            body : JSON.stringify(requestedFood)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            if (data.insertedId) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'request successfull',
+                    icon: 'success',
+                    confirmButtonText: 'Cool'
+                })
+            }
+        })
+    }
+
 
     return (
         <section className="py-24 mx-auto max-w-7xl">
@@ -21,11 +47,7 @@ const SingleFoodDetails = () => {
                         {additionalNotes}
                     </p>
                     <div className="flex divide-x-2 gap-10">
-                        {/* <div className="text-xl space-y-2 font-semibold">
-                            <p>Price : {price}</p>
-                            <p>Discount : {discount}%</p>
-                            <p>Total Price : {currentPrice}</p>
-                        </div> */}
+                       
                         <div className="text-xl  space-y-2">
                             <div className="flex items-center ">
                                 <img className="h-[50px] w-[50px] rounded-full" src={authorPhotoUrl} alt="" />
@@ -43,12 +65,12 @@ const SingleFoodDetails = () => {
                         <div className="mt-1 pl-10 text-xl space-y-2 font-semibold">
                             <p>Price : {price}</p>
                             <p>Discount : {discount}%</p>
-                            <p>Total Price : {currentPrice}</p>
+                            <p>Total Price : {discountPrice}</p>
 
                             <div className='flex'>
-                                <Link className="mt-5 inline-flex items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <button onClick={handleRequest} className="mt-5 inline-flex items-center px-6 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Request
-                                </Link>
+                                </button>
                             </div>
                         </div>
                     </div>

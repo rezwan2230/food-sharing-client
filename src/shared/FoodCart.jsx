@@ -1,4 +1,3 @@
-import badge from '../assets/medal.png'
 import badge2 from '../assets/updated.png'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
@@ -11,8 +10,6 @@ const FoodCart = ({food}) => {
     const  {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
     
     const requestedFood = {authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status}
-
-    console.log(requestedFood);
 
     const handleRequest = ()=>{
         console.log(food);
@@ -37,7 +34,7 @@ const FoodCart = ({food}) => {
     }
 
     return (
-        <div className="relative w-[440px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
+        <div className="relative mx-5 lg:w-[440px] bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mb-5">
             <img className="rounded-t-lg w-full h-72 z-1" src={foodImg} alt="" />
             <div>
                 <img className='h-12 w-12 absolute top-5 right-2 z-8' src={badge2} alt="" />

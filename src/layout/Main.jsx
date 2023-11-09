@@ -4,10 +4,12 @@ import Footer from "../shared/Footer";
 
 const Main = () => {
     return (
-        <div className="container mx-auto">
+        <div className="mx-auto bg-[#F7F4F0]">
             <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+            <div className="container mx-auto">
+                <Outlet></Outlet>
+                <Footer></Footer>
+            </div>
         </div>
     );
 };

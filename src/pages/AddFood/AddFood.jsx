@@ -47,10 +47,10 @@ const AddFood = () => {
             })
     }
     return (
-        <div className="w-full  font-sans bg-cover" style={{ backgroundImage: 'url(https://i.ibb.co/1Myc997/pexels-kamshotthat-7465827.jpg)', backgroundSize: 'fit', backgroundPosition: 'center', objectFit: "top left" }}>
+        <div className="w-full  font-sans bg-cover bg-gray-500" >
 
-            <section className="container p-6 mx-auto glass rounded-md shadow-md   mt-10" >
-                <h2 className="text-4xl font-semibold  capitalize text-white text-center mb-10">Add Product</h2>
+            <section className="container p-6 mx-auto  rounded-md shadow-md   mt-10" >
+                <h2 className="text-4xl font-semibold  capitalize text-white text-center mb-10">Add Food</h2>
 
                 <form onSubmit={handleAddFood}>
                     <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 px-10 ">
