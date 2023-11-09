@@ -1,13 +1,16 @@
 import { useLoaderData } from "react-router-dom";
 import MyFoodRequestCart from "./MyFoodRequestCart";
 import { useState } from "react";
+import { Helmet } from "react-helmet";
 
 const MyFoodRequest = () => {
     const requestedFood = useLoaderData()
     const [requested, setRequested] = useState(requestedFood)
     return (
         <div>
-            <h2></h2>
+            <Helmet>
+                <title>Food Share | My Food Request</title>
+            </Helmet>
             <h2 className="text-center font-semibold text-3xl py-10 mt-2">My Food Request</h2>
 
             {
@@ -26,7 +29,7 @@ const MyFoodRequest = () => {
                         </div>
                     </>
             }
-    
+
         </div>
     );
 };

@@ -1,11 +1,12 @@
 
 import Swal from "sweetalert2";
 import { useLoaderData, useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const UpdateFood = () => {
     const navigate = useNavigate()
-    const {_id, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes} = useLoaderData()
-    
+    const { _id, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes } = useLoaderData()
+
 
     const handleAddFood = (e) => {
         e.preventDefault()
@@ -20,34 +21,37 @@ const UpdateFood = () => {
         const expiredate = form.date.value
         const status = form.status.value
         const additionalNotes = form.notes.value
-        const updateFood = { foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status};
+        const updateFood = { foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status };
 
 
-        fetch(`http://localhost:5000/updatefoods/${_id}`,{
+        fetch(`http://localhost:5000/updatefoods/${_id}`, {
             method: "PUT",
-            headers : {
-                'content-type' : 'application/json'
+            headers: {
+                'content-type': 'application/json'
             },
-            body : JSON.stringify(updateFood)
+            body: JSON.stringify(updateFood)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-            if(data.modifiedCount > 0){
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'Updated Successfully',
-                    icon: 'success',
-                    confirmButtonText: 'Cool'
-                  })
-                form.reset()
-                navigate('/managemyfood')
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.modifiedCount > 0) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Updated Successfully',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                    })
+                    form.reset()
+                    navigate('/managemyfood')
+                }
+            })
     }
     return (
         <div className="w-full  font-sans bg-cover" style={{ backgroundImage: 'url(https://i.ibb.co/1Myc997/pexels-kamshotthat-7465827.jpg)', backgroundSize: 'fit', backgroundPosition: 'center', objectFit: "top left" }}>
 
+            <Helmet>
+                <title>Food Share | Update Food</title>
+            </Helmet>
             <section className="container p-6 mx-auto glass rounded-md shadow-md   mt-10" >
                 <h2 className="text-4xl font-semibold  capitalize text-white text-center mb-10">Update Food</h2>
 
@@ -94,14 +98,14 @@ const UpdateFood = () => {
                         </div>
 
                         <div>
-                        <label className="text-white"  defaultValue={status}>Status</label>
-                        <br></br>
-                        <select name="status" id="" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
-                            <option value="available">available</option>
-                            <option value="Not available">not available</option>
-                            
-                        </select>
-                    </div>
+                            <label className="text-white" defaultValue={status}>Status</label>
+                            <br></br>
+                            <select name="status" id="" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" required>
+                                <option value="available">available</option>
+                                <option value="Not available">not available</option>
+
+                            </select>
+                        </div>
 
                     </div>
                     <div className="relative mb-4 mt-5 px-10 ">

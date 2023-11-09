@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import DataTable from "./DataTable ";
 import { AuthContext } from "../../provider/AuthProvider";
+import { Helmet } from "react-helmet";
 
 const ManageMyFood = () => {
 
@@ -19,6 +20,10 @@ const ManageMyFood = () => {
 
     return (
         <div>
+
+            <Helmet>
+                <title>Food Share | Mange My Food</title>
+            </Helmet>
 
             <h2 className="text-center font-semibold text-3xl py-10 ">Mange My Food</h2>
 

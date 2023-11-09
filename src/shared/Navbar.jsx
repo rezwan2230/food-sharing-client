@@ -3,6 +3,7 @@ import '../shared/Navbar.css'
 import { useContext } from "react";
 import { AuthContext } from "../provider/AuthProvider";
 import userPic from '../assets/user.png'
+import logo from '../assets/logo.png'
 
 const Navbar = () => {
 
@@ -45,7 +46,7 @@ const Navbar = () => {
                         </ul>
                     </div>
                     <div className="ml-[90px] md:ml-[250px] lg:ml-[0px]">
-                        <a className="btn btn-ghost normal-case text-xl btn-sm">daisyUI</a>
+                        <img className="h-16 " src={logo} alt="" />
                     </div>
                 </div>
                 <div className="navbar-center hidden lg:flex">

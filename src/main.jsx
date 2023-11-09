@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import SingleFoodDetails from './pages/SingleFoodDetails/SingleFoodDetails';
 import UpdateFood from './pages/UpdateFood/UpdateFood';
 import PrivateRoute from './private/PrivateRoute';
+import { HelmetProvider } from 'react-helmet-async';
 
 const router = createBrowserRouter([
   {
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home></Home>,
-        loader : ()=>fetch('http://localhost:5000/foods?sortField=quantity&sortOrder=-1&limit=6')
+        loader: () => fetch('http://localhost:5000/foods?sortField=quantity&sortOrder=-1&limit=6')
       },
       {
         path: 'availablefood',
@@ -73,11 +74,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className='bg-[#F7F4F0]'>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-      <ToastContainer></ToastContainer>
-    </div>
+    <HelmetProvider>
+      <div className='bg-[#F7F4F0]'>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+        <ToastContainer></ToastContainer>
+      </div>
+    </HelmetProvider>
   </React.StrictMode>,
 )

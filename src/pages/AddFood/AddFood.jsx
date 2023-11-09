@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet";
 
 const AddFood = () => {
 
@@ -22,7 +23,7 @@ const AddFood = () => {
         const resturantName = form.resturantname.value
         const expiredate = form.date.value
         const additionalNotes = form.notes.value
-        const newFood = { authorName, email, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status};
+        const newFood = { authorName, email, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status };
 
 
         fetch('http://localhost:5000/foods', {
@@ -47,7 +48,11 @@ const AddFood = () => {
             })
     }
     return (
+
         <div className="w-full  font-sans bg-cover bg-gray-500" >
+            <Helmet>
+                <title>Food Share | Add Food</title>
+            </Helmet>
 
             <section className="container p-6 mx-auto  rounded-md shadow-md   mt-10" >
                 <h2 className="text-4xl font-semibold  capitalize text-white text-center mb-10">Add Food</h2>

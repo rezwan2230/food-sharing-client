@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet";
 import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -5,40 +6,44 @@ const SingleFoodDetails = () => {
 
     const food = useLoaderData()
 
-    const  {_id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
-    
-    const requestedFood = {authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status}
+    const { _id, authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status } = food
+
+    const requestedFood = { authorName, authorPhotoUrl, foodName, foodImg, quantity, pickupLocation, price, discount, resturantName, expiredate, additionalNotes, status }
 
     const originalPrice = parseInt(price)
     const percentage = parseInt(discount)
     const discountPrice = (percentage * originalPrice) / 100;
     console.log(discountPrice);
 
-    const handleRequest = ()=>{
+    const handleRequest = () => {
         console.log(food);
         fetch('http://localhost:5000/requestedfood', {
-            method : "POST",
-            headers : {
-                'content-type' : 'application/json'
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
             },
-            body : JSON.stringify(requestedFood)
+            body: JSON.stringify(requestedFood)
         })
-        .then(res=>res.json())
-        .then(data=>{
-            if (data.insertedId) {
-                Swal.fire({
-                    title: 'Success!',
-                    text: 'request successfull',
-                    icon: 'success',
-                    confirmButtonText: 'Cool'
-                })
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'request successfull',
+                        icon: 'success',
+                        confirmButtonText: 'Cool'
+                    })
+                }
+            })
     }
 
 
     return (
         <section className="py-24 mx-auto max-w-7xl">
+
+            <Helmet>
+                <title>Food Share | Food Details</title>
+            </Helmet>
 
             <div className="grid flex-col-reverse items-center grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-32  md:gap-x-24">
                 <div className="order-none md:order-2">
@@ -47,7 +52,7 @@ const SingleFoodDetails = () => {
                         {additionalNotes}
                     </p>
                     <div className="flex divide-x-2 gap-10">
-                       
+
                         <div className="text-xl  space-y-2">
                             <div className="flex items-center ">
                                 <img className="h-[50px] w-[50px] rounded-full" src={authorPhotoUrl} alt="" />
